@@ -32,30 +32,6 @@ function ListingCard(props: ListingCardProps) {
   );
 }
 
-const dummyListings: ListingCardProps[] = [
-  {
-    id: 1,
-    name: "Apartment 1",
-    description: "A beautiful apartment in the heart of the city.",
-    date: "2021-01-01",
-    price: 1000,
-  },
-  {
-    id: 2,
-    name: "Apartment 2",
-    description: "A cozy apartment with a view of the water.",
-    date: "2021-01-01",
-    price: 800,
-  },
-  {
-    id: 3,
-    name: "Apartment 3",
-    description: "A spacious apartment with a large garden.",
-    date: "2021-01-01",
-    price: 1200,
-  },
-];
-
 function ListingCardList({ listingList }: { listingList: ListingCardProps[] }) {
   return (
     <Flex>
@@ -78,12 +54,14 @@ function Home() {
   const [listingList, setListingList] = useState<ListingCardProps[]>([]);
 
   useEffect(() => {
-    // Using fetch to fetch the API from the flask server (redirected to proxy)
-    fetch("/api/data")
-      .then((res) => res.json())
-      .then((apiData) => {
-        // Assuming apiData is an array of listings
-        setListingList(apiData);
+    fetch("/api/protected_area")
+      .then((res) => {
+        if (res.ok) {
+          window.localStorage.setItem('isLoggedIn', JSON.stringify(true));
+        }
+        else{
+          return
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

@@ -2,26 +2,25 @@ import React, { useEffect, useState } from "react";
 
 function Login() {
   useEffect(() => {
-    fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        /* Add your request body here */
-      }),
-    })
-      .then((res) => res.json())
-      .then((apiData) => {
-        // Handle the response data
+    if (window.localStorage.isLoggedIn) {
+      window.location.href = "/";
+    } else {
+      fetch("/api/login", {
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+        }
       })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+        .then((apiData: Response) => apiData.text())
+        .then((res: string) => {window.location.href = res;})
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
   }, []);
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Redirecting to Google for login</h1>
     </div>
   );
 }

@@ -7,11 +7,14 @@ import Login from "./pages/login";
 import React from "react";
 
 function App() {
+
   return (
     <Box className="App">
       <Flex align="center" justify="space-between" p="4">
         <Heading as="h1" size="lg">
-          My App
+          <ChakraLink as={Link} to="/" style={{ textDecoration: "none" }}>
+            Illini Market
+          </ChakraLink>
         </Heading>
         <Flex>
           <ChakraLink as={Link} to="/" mx="2">
@@ -20,18 +23,19 @@ function App() {
           <ChakraLink as={Link} to="/post" mx="2">
             Post
           </ChakraLink>
-
           <ChakraLink as={Link} to="/login" mx="2">
             Login
           </ChakraLink>
         </Flex>
       </Flex>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/post" element={<Post />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      <Box p="8">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/post" element={<Post />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Box>
     </Box>
   );
 }
