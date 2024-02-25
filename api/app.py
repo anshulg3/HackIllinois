@@ -5,7 +5,6 @@ from google_auth_oauthlib.flow import Flow
 from google.oauth2 import id_token
 from pip._vendor import cachecontrol
 import google.auth.transport.requests
-import numpy as np
 import os, pathlib, json, sqlite3, requests
 from fuzzywuzzy import process
 app = Flask(__name__)

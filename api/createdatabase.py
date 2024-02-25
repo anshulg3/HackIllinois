@@ -4,16 +4,13 @@ import sqlite3
 conn = sqlite3.connect('aquarium.db')
 cursor = conn.cursor()
 
-# Define the table name
-table_name = 'subleases'
+cursor.execute('''CREATE TABLE "subleases" ( "id" INTEGER UNIQUE, "name" VARCHAR(256), 
+               "price" INTEGER, "description" TEXT, "date" DATE, "googleid" VARCHAR(256), 
+               "sellername" VARCHAR(256), "selleremail" VARCHAR(256), "imageurl" TEXT, 
+               "category" VARCHAR(256), PRIMARY KEY("id" AUTOINCREMENT) )''')
 
-# Fetch all rows from the specified table
-cursor.execute(f'SELECT * FROM {table_name}')
-rows = cursor.fetchall()
+conn.commit()
 
-# Print the rows
-for row in rows:
-    print(row)
-
-# Close the connection
+# Close the cursor and connection
+cursor.close()
 conn.close()
