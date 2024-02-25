@@ -21,14 +21,18 @@ export function SearchBar({ onSearch }: SearchBarProps) {
 
   const handleSearch = () => {
     setSearchParams({ query: searchQuery });
+    setSearchParams({ category: searchCategory });
     onSearch(searchQuery, searchCategory);
   };
 
   useEffect(() => {
     const query = searchParams.get("query");
+    const category = searchParams.get("category");
     if (query && query !== searchQuery) {
       setSearchQuery(query);
-      onSearch(query, "");
+      setSearchCategory(category || "");
+      
+      onSearch(query, category || "");
     }
   }, [searchParams]);
 

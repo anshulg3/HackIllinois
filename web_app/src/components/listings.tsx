@@ -40,6 +40,12 @@ export type ListingProps = {
 
 function ListingCard(props: ListingProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  let url = `/search/?query=${encodeURIComponent(
+    props.name + " " + props.description
+  )}`;
+  if (props.category && props.category !== "") {
+    url += `&category=${encodeURIComponent(props.category)}`;
+  }
   return (
     <Box>
       <Card onClick={onOpen}>
@@ -121,9 +127,7 @@ function ListingCard(props: ListingProps) {
             <ButtonGroup variant="outline" spacing="3">
               <Button
                 as={Link}
-                to={`/search/?query=${encodeURIComponent(
-                  props.name + " " + props.description
-                )}`}
+                to={url}
                 onClick={onClose}
                 colorScheme="blue"
               >
