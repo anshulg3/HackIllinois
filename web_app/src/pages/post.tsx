@@ -1,12 +1,23 @@
 import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
-import { Box, FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
+import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Heading,
+  Flex,
+  Text,
+} from "@chakra-ui/react";
 
-function Post() {
+function Post({ isLoggedIn }: { isLoggedIn: boolean }) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    imageurl: "",
     price: 0,
-    date: "",
+    category: ""
   });
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -17,7 +28,7 @@ function Post() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
+    console.log("Form data: ", formData);
     try {
       const response = await fetch("/api/data", {
         method: "POST",
@@ -35,6 +46,7 @@ function Post() {
 
       console.log("Listing created successfully: ", data);
       setSuccessMessage("Listing submitted successfully!");
+      window.location.href = "/";
     } catch (error) {
       console.error("Error creating listing:", error);
       // Display an error message to the user
@@ -42,32 +54,53 @@ function Post() {
   }
 
   useEffect(() => {
-    const fetchInitialData = async () => {
-      try {
-        const response = await fetch("/api/data");
-        const initialData = await response.json();
-        setFormData(initialData);
-      } catch (error) {
-        console.error("Error fetching initial data:", error);
-      }
-    };
-
-    fetchInitialData();
-  }, []);
+    if (!isLoggedIn) {
+      window.location.href = "/";
+      return;
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (successMessage !== "") {
       setTimeout(() => {
-        setFormData({ name: "", description: "", price: 0, date: "" });
+        setFormData({ name: "", description: "", imageurl: "", price: 0 , category: ""});
         setSuccessMessage("");
       }, 3000); // Reset form after 3 seconds
     }
   }, [successMessage]);
 
   return (
-    <Box as="form" onSubmit={handleSubmit}>
-      <FormControl isRequired>
-        <FormLabel htmlFor="name">Name</FormLabel>
+    <Box p={4} as="form" onSubmit={handleSubmit}>
+      <FormControl isRequired pt={2} maxW={800}>
+        <FormLabel htmlFor="name">Title</FormLabel>
+        <CheckboxGroup colorScheme="blue" onChange={handleInputChange}>
+          <Checkbox name="name" value={formData.name}>
+            Option 1
+          </Checkbox>
+          <Checkbox name="name" value={formData.name}>
+            Option 2
+          </Checkbox>
+          <Checkbox name="name" value={formData.name}>
+            Option 3
+          </Checkbox>
+        </CheckboxGroup>
+      </FormControl>
+      <Flex
+        direction="column"
+        align="center"
+        justify="center"
+        w="100%"
+        h="100%"
+      >
+        <Heading as="h2" mb={4}>
+          Create a New Listing 📦
+        </Heading>
+        <Text fontSize="lg" mb={8}>
+          Thousands of UIUC students are ready to buy!
+        </Text>
+
+      <FormControl isRequired pt={2} maxW={800}>
+        <FormLabel htmlFor="name">Title</FormLabel>
         <Input
           type="text"
           name="name"
@@ -75,7 +108,7 @@ function Post() {
           onChange={handleInputChange}
         />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl isRequired pt={2} maxW={800}>
         <FormLabel htmlFor="description">Description</FormLabel>
         <Input
           type="text"
@@ -84,7 +117,7 @@ function Post() {
           onChange={handleInputChange}
         />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl isRequired pt={2} maxW={800}>
         <FormLabel htmlFor="price">Price</FormLabel>
         <Input
           type="number"
@@ -94,21 +127,22 @@ function Post() {
           onChange={handleInputChange}
         />
       </FormControl>
-      <FormControl isRequired>
-        <FormLabel htmlFor="date">Date</FormLabel>
+      <FormControl pt={2} maxW={800}>
+        <FormLabel htmlFor="imageurl">Image URL</FormLabel>
         <Input
-          type="date"
-          name="date"
-          value={formData.date}
+          type="string"
+          name="imageurl"
+          value={formData.imageurl}
           onChange={handleInputChange}
         />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl isRequired pt={16} maxW={800} >
         <Button type="submit" colorScheme="blue">
           Submit Listing
         </Button>
       </FormControl>
       {successMessage && <p>{successMessage}</p>}
+      </Flex>
     </Box>
   );
 }

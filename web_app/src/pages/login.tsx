@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { Box, Heading } from "@chakra-ui/react";
 
 function Login() {
   useEffect(() => {
-    if (window.localStorage.isLoggedIn) {
-      window.location.href = "/";
-    } else {
       fetch("/api/login", {
         credentials: 'include',
         headers: {
@@ -17,11 +15,11 @@ function Login() {
           console.error("Error fetching data:", error);
         });
     }
-  }, []);
+  , []);
   return (
-    <div>
-      <h1>Redirecting to Google for login</h1>
-    </div>
+    <Box p={4}>
+      <Heading>Redirecting to Google for login</Heading>
+    </Box>
   );
 }
 
