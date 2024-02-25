@@ -92,10 +92,6 @@ function App() {
           <Route path="/logout" element={<Logout isLoggedIn={isLoggedIn} />} />
         </Routes>
       </Box>
-
-      {/* <Box p="4" textAlign="center" borderTop="1px solid gray">
-        &copy; 2024 Best HackIllinois Team | Made with ❤️
-      </Box> */}
     </Box>
   );
 }

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
-import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
+import { Radio, RadioGroup, Textarea } from "@chakra-ui/react";
 import {
   Box,
   FormControl,
@@ -25,6 +25,15 @@ function Post({ isLoggedIn }: { isLoggedIn: boolean }) {
     const new_value = event.target.value;
     setFormData({ ...formData, [event.target.name]: new_value });
   }
+
+  function handleTextAreaChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    const new_value = event.target.value;
+    setFormData({ ...formData, [event.target.name]: new_value });
+  }
+
+  const handleRadioChange = (nextValue: string) => {
+    setFormData({ ...formData, category: nextValue });
+  };
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -71,20 +80,6 @@ function Post({ isLoggedIn }: { isLoggedIn: boolean }) {
 
   return (
     <Box p={4} as="form" onSubmit={handleSubmit}>
-      <FormControl isRequired pt={2} maxW={800}>
-        <FormLabel htmlFor="name">Title</FormLabel>
-        <CheckboxGroup colorScheme="blue" onChange={handleInputChange}>
-          <Checkbox name="name" value={formData.name}>
-            Option 1
-          </Checkbox>
-          <Checkbox name="name" value={formData.name}>
-            Option 2
-          </Checkbox>
-          <Checkbox name="name" value={formData.name}>
-            Option 3
-          </Checkbox>
-        </CheckboxGroup>
-      </FormControl>
       <Flex
         direction="column"
         align="center"
@@ -98,7 +93,17 @@ function Post({ isLoggedIn }: { isLoggedIn: boolean }) {
         <Text fontSize="lg" mb={8}>
           Thousands of UIUC students are ready to buy!
         </Text>
-
+      
+      <FormControl isRequired pt={2} maxW={800}>
+        <FormLabel htmlFor="name">Category</FormLabel>
+        <RadioGroup colorScheme="blue" onChange={handleRadioChange} value={formData.category}>
+          <Radio name="category" value="School Supply">School Supply</Radio>
+          <Radio px={3} name="category" value="Sublease">Sublease</Radio>
+          <Radio px={3} name="category" value="Ticket">Ticket</Radio>
+          <Radio px={3} name="category" value="Event">Event</Radio>
+          <Radio px={3} name="category" value="Other">Other</Radio>
+        </RadioGroup>
+      </FormControl>
       <FormControl isRequired pt={2} maxW={800}>
         <FormLabel htmlFor="name">Title</FormLabel>
         <Input
@@ -110,11 +115,11 @@ function Post({ isLoggedIn }: { isLoggedIn: boolean }) {
       </FormControl>
       <FormControl isRequired pt={2} maxW={800}>
         <FormLabel htmlFor="description">Description</FormLabel>
-        <Input
-          type="text"
+        <Textarea
           name="description"
           value={formData.description}
-          onChange={handleInputChange}
+          onChange={handleTextAreaChange}
+          height={"200px"}
         />
       </FormControl>
       <FormControl isRequired pt={2} maxW={800}>
@@ -136,7 +141,7 @@ function Post({ isLoggedIn }: { isLoggedIn: boolean }) {
           onChange={handleInputChange}
         />
       </FormControl>
-      <FormControl isRequired pt={16} maxW={800} >
+      <FormControl isRequired pt={6} maxW={800} >
         <Button type="submit" colorScheme="blue">
           Submit Listing
         </Button>

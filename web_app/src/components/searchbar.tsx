@@ -3,25 +3,34 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Select,
   Button,
 } from "@chakra-ui/react";
 import { LuSearch } from "react-icons/lu";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 interface SearchBarProps {
-  onSearch: (query: string) => void;
+  onSearch: (query: string, searchCategory: string) => void;
 }
 
 export function SearchBar({ onSearch }: SearchBarProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchCategory, setSearchCategory] = useState<string>("");
 
   const handleSearch = () => {
-    onSearch(searchQuery);
+    setSearchParams({ query: searchQuery });
+    onSearch(searchQuery, searchCategory);
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
+  useEffect(() => {
+    const query = searchParams.get("query");
+    if (query && query !== searchQuery) {
+      setSearchQuery(query);
+      onSearch(query, "");
+    }
+  }, [searchParams]);
 
   return (
     <Flex
@@ -40,13 +49,20 @@ export function SearchBar({ onSearch }: SearchBarProps) {
           type="text"
           placeholder="From subleases, to game tickets, to IOLabs, you can find it all here."
           value={searchQuery}
-          onChange={handleInputChange}
+          onChange={ (e) => setSearchQuery(e.target.value) }
           onKeyPress={(e) => {
             if (e.key === "Enter") {
               handleSearch();
             }
           }}
         />
+        <Select ml={2} maxW={40} placeholder="Select category" onChange={(e) => setSearchCategory(e.target.value)}>
+          <option value="School Supply"> School Supply </option>
+          <option value="Sublease"> Sublease </option>
+          <option value="Ticket"> Ticket </option>
+          <option value="Event"> Event </option>
+          <option value="Other"> Other </option>
+        </Select>
         <Button
           ml={2}
           onClick={handleSearch}

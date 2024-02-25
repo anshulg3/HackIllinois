@@ -29,6 +29,7 @@ function Home() {
   }, []);
 
   return (
+    <Box>
     <Box as="section" overflow="hidden" p={4}>
       <Stack mx="auto" py="5" pos="relative" pb="32" px={[4, 0]}>
         <VStack mb="20" spacing={20} alignItems="center">
@@ -79,7 +80,7 @@ function Home() {
             h="100%"
           >
             <Heading as="h2" mb={4}>
-              Latest Listings ⏱️
+              Latest Listings 📈
             </Heading>
             <ListingCardGrid listingList={listingList} />
           </Flex>
@@ -119,6 +120,10 @@ function Home() {
         </VStack>
       </Stack>
     </Box>
+      <Box p="4" textAlign="center" borderTop="1px solid gray">
+        &copy; 2024 Best HackIllinois Team | Made with ❤️
+      </Box>
+      </Box>
   );
 }
 

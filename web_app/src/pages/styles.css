@@ -1,0 +1,4 @@
+.checkbox-without-focus {
+    outline: none; /* Remove default focus outline */
+  }
+  

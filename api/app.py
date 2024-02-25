@@ -13,7 +13,6 @@ CORS(app)
 
 def getMoreSimilar():
     try:
-        
         conn = sqlite3.connect('aquarium.db')
         cursor = conn.cursor()
         category = request.args.get('category')
@@ -23,10 +22,13 @@ def getMoreSimilar():
         else:
             cursor.execute("SELECT id, name, price, description, date, sellername, selleremail, imageurl, category FROM subleases")
         data = cursor.fetchall()
-
         inputData = request.args.get('query')
-        matches = process.extract(inputData, [str(d[0]) + " " + d[1] + " " +d[3] for d in data], limit=10)
-
+        if inputData is None:
+            attributes = ['id', 'name', 'price', 'description', 'date', 'sellername', 'selleremail', 'imageurl', 'category']
+            data = [dict(zip(attributes, row)) for row in matched_rows]
+            return jsonify(data)
+        
+        matches = process.extract(inputData, [str(d[0]) + " " + d[1] + " " +d[3] for d in data], limit=50)
         if matches:
             matched_rows = []
             for match in matches:
