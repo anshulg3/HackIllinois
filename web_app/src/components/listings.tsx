@@ -124,6 +124,7 @@ function ListingCard(props: ListingProps) {
                 to={`/search/?query=${encodeURIComponent(
                   props.name + " " + props.description
                 )}`}
+                onClick={onClose}
                 colorScheme="blue"
               >
                 Find Similar Listings
