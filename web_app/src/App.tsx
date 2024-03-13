@@ -71,7 +71,14 @@ function App() {
           )}
           {!isLoggedIn && (
             <Button as={Link} to="/login">
-              Login
+              <Box pr={2}>
+              <Image
+              src={Logo}
+              width="10px"
+              height="15px"
+            />
+            </Box>
+            <Text>Login</Text>
             </Button>
           )}
           {isLoggedIn && (

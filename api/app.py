@@ -103,6 +103,10 @@ def callback():
         audience=GOOGLE_CLIENT_ID
     )
 
+    if id_info.get("hd") != "illinois.edu":
+        session.clear()
+        return redirect("http://localhost:3000/")  # Unauthorized
+
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
     session["email"] = id_info.get("email")
