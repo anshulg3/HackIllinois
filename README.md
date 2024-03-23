@@ -1,5 +1,7 @@
 <img src="./web_app/src/media/IlliniMarketLogo.jpg" alt="Logo" width="400" height="400">
 
+[![Illini Market Showcase](https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DWCHT8V0Zf7Y)](https://www.youtube.com/watch?v=WCHT8V0Zf7Y)
+
 ## HackIllinois 2024 Project
 
 Welcome to Illini Market! This is a web application that allows students to buy and sell items with other students on campus. This project was created for HackIllinois 2024.
@@ -16,7 +18,7 @@ Having met each other for the first time just a few short days ago, we began get
 
 ### What it does
 
-"Illini Market" is a dynamic web application designed to streamline the process of discovering various listings posted by other students that are essential for university life. These could range from subleases, to school supplies, to tickets for events, all within an intuitive and interactive interface. Emphasizing user convenience, the platform offers seamless integration with Google authentication, ensuring secure sign-in procedures for all users. Once the user is logged in, they can view listings created by other users for virtually any product, including things such as clothes or electronics. The website incorporates a powerful search algorithm to find products of relevance to any search our users could devise. Logged in users also have the ability to create their own listings and publish them to the website for anyone to view. If a user finds a listing of interest, they can click on the listing to get more information and easily contact the listing owner via email with the click of a button. By streamlining the process through which students can share and exchange products, Illini Market represents the last puzzle piece in the Illini community.
+"Illini Market" is a dynamic web application designed to streamline the process of discovering various listings posted by other students that are essential for university life. These could range from subleases, to school supplies, to tickets for events, all within an intuitive and interactive interface. Emphasizing user convenience, the platform offers seamless integration with Google authentication, ensuring secure sign-in procedures for all users. Once the user is logged in using their University of Illinois credentials, they can view listings created by other users for virtually any product, including things such as clothes or electronics. The website incorporates a powerful search algorithm to find products of relevance to any search our users could devise. Logged in users also have the ability to create their own listings and publish them to the website for anyone to view. If a user finds a listing of interest, they can click on the listing to get more information and easily contact the listing owner via email with the click of a button. By streamlining the process through which students can share and exchange products, Illini Market represents the last puzzle piece in the Illini community.
 
 ### How we built it
 
@@ -60,7 +62,7 @@ Steps:
 
    `npm install`
 
-3. Navigate to the `api` directory, install the backend dependencies, and create the database:
+3. Navigate to the `api` directory, install the backend dependencies (OAuth client secret json file also needed), and create the database:
 
    `cd ..`
 
