@@ -119,9 +119,6 @@ def callback():
 def protected_area():
     return jsonify(message=f"Hello {session['name']}!", status=200)
 
-# def create_feature_vector():
-    
-
 
 def get_data():
     # Connect to the SQLite database
@@ -132,7 +129,6 @@ def get_data():
     getmydata = request.args.get('getmydata')
     id = request.args.get('id')
     limit = request.args.get('limit')
-    category = request.args.get('category')
     if id: # not necessary
         query = 'SELECT id, name, price, description, date, sellername, selleremail, imageurl, category FROM subleases WHERE id = ?;'
         cursor.execute(query, (id,))
@@ -299,9 +295,16 @@ def delete_data():
     except Exception as e:
         return jsonify({'message': 'An error occurred: ' + str(e)}), 500
 
-
-
-
+# To do:
+# Train on a large dataset instead of db entries or use pretrained model
+# Preprocess further (maybe dim reduction) and remove punctuation and any other potentially irrelevant data (say if using Bag of words?)
+# Map item full items to desctiptions instead of returning descriptions
+#
+# from gensim.models import Word2Vec
+# from nltk.tokenize import word_tokenize
+# from sklearn.metrics.pairwise import cosine_similarity
+# import numpy as np
+#
 # def get_similarities():
 #     # Grab all the descriptions
 #     conn = sqlite3.connect('aquarium.db')
@@ -311,11 +314,9 @@ def delete_data():
 #     rows = cursor.fetchall()
 #     descriptions = [row[0] for row in rows]
 #     print(descriptions)
-
 #     # Tokenize them and run word2vec_model
 #     tokenized_descriptions = [word_tokenize(desc.lower()) for desc in descriptions]
 #     word2vec_model = Word2Vec(sentences=tokenized_descriptions, vector_size=100, window=5, min_count=1, workers=4)
-
 #     # Convert actual text to features
 #     def text_to_feature_vector(text):
 #         tokens = word_tokenize(text.lower())
@@ -335,12 +336,10 @@ def delete_data():
 #         return cosine_similarity([apartment1], [apartment2])[0][0]
 
 # # Function to recommend similar apartments based on a given apartment
-#     def recommend_similar_apartments(target_apartment, top_n=3):
+#     def recommend_similar_apartments(searchvect, top_n=3):
 #         similarities = {}
-#         target_vector = apartment_vectors[target_apartment]
 #         for apt_desc, apt_vector in apartment_vectors.items():
-#             if apt_desc != target_apartment:
-#                 similarity_score = calculate_similarity(target_vector, apt_vector)
+#                 similarity_score = calculate_similarity(searchvect, apt_vector)
 #                 similarities[apt_desc] = similarity_score
 #         # Sort apartments by similarity score
 #         sorted_similarities = sorted(similarities.items(), key=lambda x: x[1], reverse=True)
@@ -348,13 +347,10 @@ def delete_data():
 #         # return sorted_similarities[:top_n]
 #         return [apt_desc for apt_desc, _ in sorted_similarities[:top_n]]
 
-#     getmydata = request.args.get('description')
-#     print(getmydata)
-#     recommended_apartments = recommend_similar_apartments(getmydata)
+#     getmydata = request.args.get('searchterms')
+#     v = text_to_feature_vector(getmydata)
+#     recommended_apartments = recommend_similar_apartments(v)
 #     return jsonify(recommended_apartments)
-
-    
-    
 
 
 # Add the routes to the Flask app
